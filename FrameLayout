@@ -1,0 +1,134 @@
+//######################            XML FILE  ###############################################3
+
+<?xml version="1.0" encoding="utf-8"?>
+
+
+<FrameLayout xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_height="match_parent"
+    android:layout_width="match_parent"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        app:srcCompat="@drawable/bgimg"
+        android:layout_gravity="center"/>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical" >
+        <TextView
+            android:id="@+id/tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/colorAccent"
+
+            android:padding="16dp"
+            android:textSize="20sp"
+            />
+        </LinearLayout>
+    </ScrollView>
+
+
+
+</FrameLayout>
+
+// #################      MainActivity.java #######################33
+
+
+import android.support.v7.app.AppCompatActivity;
+import android.os.Bundle;
+import android.widget.TextView;
+
+import java.awt.font.TextAttribute;
+
+public class MainActivity extends AppCompatActivity {
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+
+        TextView tv = (TextView)findViewById(R.id.tv);
+
+        String [] toyname = toyBox.getToyNames();
+
+        for( String toynames : toyname)
+        {
+            tv.append(toynames +"\n\n\n");
+        }
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+//################33   file containing string array displayed in text view       #######################
+
+
+package com.example.admin.udacitycodes;
+
+public final class toyBox {
+
+    public static String[] getToyNames()
+    {
+        return new String[]
+                {
+                        "barbie",
+                        "annabel",
+                        "yo-yo","barbie",
+                        "annabel",
+                        "yo-yo",
+                        "barbie",
+                        "annabel",
+                        "yo-yo",
+                        "barbie",
+                        "annabel",
+                        "yo-yo",
+                        "barbie",
+                        "annabel",
+                        "yo-yo",
+                        "barbie",
+                        "annabel",
+                        "yo-yo",
+                        "barbie",
+                        "annabel",
+                        "yo-yo",
+                        "barbie",
+                        "annabel",
+                        "yo-yo",
+                        "barbie",
+                        "annabel",
+                        "yo-yo",
+                        "barbie",
+                        "annabel",
+                        "yo-yo",
+                        "barbie",
+                        "annabel",
+                        "yo-yo",
+                        "barbie",
+                        "annabel",
+                        "yo-yo",
+                        "barbie",
+                        "annabel",
+                        "yo-yo"
+
+
+                };
+    }
+}
+
