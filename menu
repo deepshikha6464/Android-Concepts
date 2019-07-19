@@ -1,0 +1,49 @@
+//    **********   creating a  menu resource directory and a menu.xml file in that directory        ***
+// * *******  structure = res->menu->menu.xml
+
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/search"
+        android:orderInCategory="1"  //shows the positoin of the item n the menu
+         app:showAsAction="ifRoom"   // shows the menu item in toolbar
+
+        android:title="Search" />
+    <item
+        android:id="@+id/search1"
+        android:orderInCategory="1"
+        android:title="abcd" />
+    <item
+        android:id="@+id/search2"
+        android:orderInCategory="2"
+        android:title="efgh" />
+    <item
+        android:id="@+id/search3"
+        android:orderInCategory="3"
+        android:title="hijk" />
+
+</menu>
+
+
+//****************************************************************************************************
+
+//in Mainactivity.java ..... add two functions to create menu and to use if it is selected
+
+ @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.main , menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int itemThatGotSelected = item.getItemId();
+        if(itemThatGotSelected == R.id.search)
+        {
+             Toast.makeText(this,"search is selected",Toast.LENGTH_SHORT).show();
+        }
+        return true;
+    }
+    
+    //*********************************************************
