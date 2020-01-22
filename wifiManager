@@ -1,0 +1,34 @@
+  public static boolean probeWifiDetails(Context appContext) {
+        //check if we're connected to wifi
+        WifiManager wifiManager = (WifiManager) appContext.getSystemService(Context.WIFI_SERVICE);
+        if(wifiManager != null && !wifiManager.isWifiEnabled()){
+            Log.d(TAG,"Wifi was disabled, enabling WiFi from our handler");
+            wifiManager.setWifiEnabled(true);
+
+            return true;
+        } else {
+            Log.i(TAG,"WiFi is enabled, gathering info...");
+            //get wifi info
+            WifiInfo wifiInfo = wifiManager.getConnectionInfo();
+            if(wifiInfo != null){
+                Log.d(TAG, "wifiInfo not null ..saving info ");
+                 ssid = wifiInfo.getSSID();
+                if (ssid == null) {
+                    ssid = "Unknown";
+                } else {
+                    if (ssid.startsWith("\"") && ssid.endsWith("\"")) {
+                        ssid = ssid.substring(1, ssid.length() - 1);
+                    }
+                }
+
+                 mac = wifiInfo.getMacAddress();
+                 ip = String.valueOf(wifiInfo.getIpAddress());
+                 bssid = wifiInfo.getBSSID();
+                rssi = String.valueOf(wifiInfo.getRssi());
+                speed = String.valueOf(wifiInfo.getLinkSpeed());
+                Log.d(TAG, "probeWifiDetails: " +wifiInfo.getLinkSpeed() + " "+  wifiInfo.getFrequency()/* +" " +  wifiInfo.getTxLinkSpeedMbps() + " " + wifiInfo.getRxLinkSpeedMbps() */);
+            }
+
+        }
+        return false;
+    }
