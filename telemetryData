@@ -1,0 +1,103 @@
+  private void telemetryAPIcall()
+    {
+        String PowerStatus ;
+        String ConnectionStatus="null";
+        int batLevel;
+        BatteryManager bm = (BatteryManager) getSystemService(BATTERY_SERVICE);
+        batLevel = bm.getIntProperty(BatteryManager.BATTERY_PROPERTY_CAPACITY);  //percentage
+        String batteryPercent = String.valueOf(batLevel);
+
+        Intent intent = getApplication().registerReceiver(null, new IntentFilter(Intent.ACTION_BATTERY_CHANGED));
+        //connection status
+        int plugged = intent.getIntExtra(BatteryManager.EXTRA_PLUGGED, -1);
+
+        if(plugged == 2 || plugged == 1 || plugged == 4)
+        {
+            ConnectionStatus = BATTERY_CONNECTED;
+        }
+        if( plugged == 0)
+        {
+            ConnectionStatus = BATTERY_DISCONNECTED;
+        }
+
+
+
+        if(batLevel <= 15)
+        {
+            PowerStatus = "Low_Power";
+        }else
+        {
+            PowerStatus = "OK";
+        }
+
+        BatteryData bd = new BatteryData(ConnectionStatus,PowerStatus);
+
+        //uptime
+        JSONObject uptimejson = new JSONObject();
+        try {
+            uptimejson.put("days",PowerUtil.days);
+            uptimejson.put("hours",PowerUtil.hours);
+            uptimejson.put("minutes",PowerUtil.minutes);
+            uptimejson.put("seconds",PowerUtil.seconds);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+
+        //Telemetry  API
+        {
+            RequestQueue queue = Volley.newRequestQueue(getApplicationContext());
+            String url = this.getString(R.string.telemetry_api);//todo change url
+            StringRequest postRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
+                @Override
+                public void onResponse(String response) {
+                    Log.d("Response", response);
+                    //  Toast.makeText(context, "response " + response + " " + ConnectionStatus + batLevel + " % ", Toast.LENGTH_SHORT).show();
+
+
+                }
+            }, new Response.ErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyError error) {
+                    // Log.d("Response", error);
+                    //  Toast.makeText(context, "response " + error + " " + ConnectionStatus + batLevel + " % ", Toast.LENGTH_SHORT).show();
+
+                }
+            }) {
+                @Override
+                protected Map<String, String> getParams() throws AuthFailureError {
+                    String kioskId =Data.getKioskCode();
+                    String venueId = Data.getVenueCode();
+                    JSONObject currentStatus = new JSONObject();
+                    try {
+                        currentStatus.put("batteryLevel",batLevel); //int
+                        currentStatus.put("powerStatus",bd.getPowerSattus());
+                        currentStatus.put("chargerStatus",bd.getConnectionStatus());
+                        currentStatus.put("ssid",PowerUtil.ssid);
+                        currentStatus.put("rssi",PowerUtil.rssi);
+                        currentStatus.put("ip",PowerUtil.ip);
+                        currentStatus.put("linkSpeed",PowerUtil.speed);
+                        currentStatus.put("uptime",uptimejson);  //todo chk this  value
+                       currentStatus.put("bssid",PowerUtil.bssid);
+                        currentStatus.put("mac",PowerUtil.mac);
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                    String telemetryStatus = currentStatus.toString();
+
+
+                    Map<String,String> parameters = new HashMap<>();
+                    parameters.put("kioskId",kioskId);
+                    parameters.put("vid",venueId);
+                    parameters.put("currentStatus",telemetryStatus);  //todo string or json??
+
+//                    Map<String, String> parameters = Data.getParameters(statuS, jsonStatus, Data.getPincode(),
+//                            Data.getStartURL(), Data.getInformURL(), Data.getNetworkCheckURL(),Data.getLocation() , batteryPercent,bd.getConnectionStatus(),bd.getPowerSattus());
+                 return parameters;
+                }
+            };
+
+            queue.add(postRequest);
+        }
+
+    }
