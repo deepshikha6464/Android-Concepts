@@ -1,0 +1,25 @@
+ public static  void upTime() {
+        long currentTime = SystemClock.uptimeMillis();
+        seconds = currentTime / 1000;
+         minutes = seconds / 60;
+         hours = minutes / 60;
+         days = hours / 24;
+        seconds = seconds % 60;
+        minutes = minutes % 60;
+        hours = hours % 24;
+        Log.d(TAG, "upTime: "+days+ ":" + hours + ":" +minutes+":"+seconds);
+    }
+    
+    
+    
+    //uptime
+        JSONObject uptimejson = new JSONObject();
+        try {
+            uptimejson.put("days",days);
+            uptimejson.put("hours",hours);
+            uptimejson.put("minutes",minutes);
+            uptimejson.put("seconds",seconds);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+    
