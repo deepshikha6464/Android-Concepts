@@ -1,0 +1,13 @@
+
+
+onBindHolder called several times
+as Recycler View needs a view unless new one. 
+So each time you set visilibity in child views, other views states are also changes.
+
+Whenever you scroll up and down,
+these views are getting re-drawed with wrong visibility options 
+
+so to overcome this problem use this code inside the onBindViewHolder()
+//*******************
+holder.setIsRecyclable(false);
+//**********************
