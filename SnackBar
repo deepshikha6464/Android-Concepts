@@ -1,0 +1,10 @@
+private void showSnackbar(String msg,String c)
+{
+    Snackbar snackbar = Snackbar
+            .make(getActivity().getCurrentFocus(), msg, Snackbar.LENGTH_SHORT);
+    View snackBarView = snackbar.getView();
+    snackBarView.setBackgroundColor(Color.parseColor(c));
+    TextView tv = snackBarView.findViewById(R.id.snackbar_text);
+    tv.setTextColor(WHITE);
+    snackbar.show();
+}
