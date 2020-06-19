@@ -1,0 +1,23 @@
+
+Alpha value is used for making colors transparent 
+they are shown as percentage and hex is used..
+
+Android supports the #AARRGGBB color format.
+
+A = alpha, R = Red, G = Green, B = Blue
+
+To make some View transparent use #00000000.
+
+First 00 are alpha.
+
+
+0% = #00
+10% = #16
+20% = #32
+30% = #48
+40% = #64
+50% = #80
+60% = #96
+70% = #112
+80% = #128
+90% = #144
