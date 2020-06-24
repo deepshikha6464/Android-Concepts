@@ -1,0 +1,34 @@
+XML where loader is needed:
+
+ <!--progress bar-->
+    <RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:id="@+id/pageLoading1"
+        android:visibility="gone"
+        android:background="@color/transparent">
+
+        <ProgressBar
+            style="?android:attr/progressBarStyleLarge"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/progressBar4"
+            android:layout_gravity="center_horizontal"
+            android:layout_centerInParent="true"
+            android:background="#00757575"/>
+    </RelativeLayout>
+    
+    
+   now adding transparent color in styles file
+    <color name="transparent">#32757575</color>
+    
+    in the java file :
+    
+     RelativeLayout pageloding1;
+     pageloding1 = findViewById(R.id.pageLoading1);
+     
+     write this when button is clicked 
+       pageloding1.setVisibility(View.VISIBLE);
+       
+       when the operation is done 
+         pageloding1.setVisibility(View.GONE);
